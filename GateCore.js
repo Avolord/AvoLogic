@@ -4,11 +4,11 @@ let standard_size = 100;
 //Configuration [0]:Number of inputs | [1]:Number of outputs | [2]:Power On/Off
 
 let gate_configurations = {
-  "and" : [2,1,0],
-  "or": [2,1,0],
-  "xor": [2,1,0],
-  "generator": [0,4,1],
-  "lamp": [1,0,0]
+  "and" : [2,1,0,"pink"],
+  "or": [2,1,0,"brown"],
+  "xor": [2,1,0,"blue"],
+  "generator": [0,4,1,"white"],
+  "lamp": [1,0,0,"white"]
 }
 
 class gate_core {
@@ -27,11 +27,13 @@ class gate_core {
       this.in = config[0];
       this.out = config[1];
       this.generating = config[2];
+      this.color = config[3];
       this.type = type.toLowerCase();
     } else {
       this.in = 2;
       this.out = 1;
       this.generating = 0;
+      this.color = "blue";
       this.type = "and";
     }
   }
@@ -78,8 +80,8 @@ class gate_core {
         out.draw(this.x, this.y, standard_size / 10);
       });
 
-      rect(this.x, this.y, standard_size, standard_size, "stroke", "white");
-      rect(this.x, this.y, standard_size, standard_size, "fill", "white", 0.2);
+      rect(this.x, this.y, standard_size, standard_size, "stroke", this.color);
+      rect(this.x, this.y, standard_size, standard_size, "fill", this.color, 0.2);
     }
 
 }
