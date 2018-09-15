@@ -31,10 +31,15 @@ class node {
     }
   }
 
+  update_cable() {
+    this.cables.forEach(cable => cable.powered = (this.power == 1) ? true : false);
+  }
+
   draw(x , y, size) {
     if(this.type == 1) {
       circle(this.x + x, this.y + y, size, "fill", this.color);
       circle(this.x + x, this.y + y, size/3, "fill", "black");
+      this.update_cable();
     } else {
       this.update_input();
       circle(this.x + x, this.y + y, size, "fill", this.color);
