@@ -74,11 +74,12 @@ class node {
     }
   }
 
-  deactivate() {
+  deactivate(index) {
+    index = index || this.cable_count;
     this.active = false;
     this.color = "white";
     if(this.type == 1) {
-      this.cables.forEach(cable => cable.status = 0);
+      this.cables[index].status = 0;
     } else {
       this.power = 0;
       this.partner = null;

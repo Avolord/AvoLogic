@@ -21,6 +21,17 @@ class gate extends gate_core{
     });
   }
 
+  remove_gate() {
+    gate_storage.forEach(gate => {
+      if(gate.index > this.index) {
+        gate.index--;
+        gate.inputs.forEach(x => x.parent_index--);
+        gate.outputs.forEach(x => x.parent_index--);
+      }
+    });
+    gate_storage.splice(this.index,1);
+  }
+
   initInputs() {
     let result = new Array(this.in).fill(0);
     let size = standard_size / (this.in + 1);
@@ -130,5 +141,12 @@ document.onkeypress = function(e) {
   if(e.key == "s") {
     let type = prompt("Enter a type");
     new gate(mouseX,mouseY,type);
+  }
+  if(e.key == "d") {
+    gate_storage.forEach(gate => {
+      if(gate.mouseover) {
+        gate.remove_gate();
+      }
+    });
   }
 }
