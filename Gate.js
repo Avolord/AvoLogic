@@ -140,7 +140,7 @@ class gate extends gate_core{
 document.onkeypress = function(e) {
   if(e.key == "s") {
     let type = prompt("Enter a type");
-    new gate(mouseX,mouseY,type);
+    new gate(mouseX+Math.random()*20-10,mouseY+Math.random()*20-10,type);
   }
   if(e.key == "d") {
     gate_storage.forEach(gate => {

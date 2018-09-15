@@ -1,7 +1,7 @@
 let gate_scaling = 1;
 let standard_size = 100;
 
-//Configuration [0]:Number of inputs | [1]:Number of outputs | [2]:Power On/Off | [3]:Color | [4]:Alpha
+//Configuration [0]:Number of inputs | [1]:Number of outputs | [2]:Power On/Off | [3]:Color | [4]:Alpha | [5]:Buttons
 
 let gate_configurations = {
   "and" : [2,1,0,"pink",0.2],
@@ -30,6 +30,7 @@ class gate_core {
       this.generating = config[2];
       this.color = config[3];
       this.alpha = config[4];
+      this.buttons = config[5];
       this.type = type.toLowerCase();
     } else {
       this.in = 2;
@@ -54,6 +55,21 @@ class gate_core {
         }
       }
     );
+  }
+
+  static toggle_event() {
+    gate_storage.forEach(gate => {
+      if(!gate.mouseover) {
+        return;
+      }
+      if (gate.marked_node) {
+        if(gate.marked_node.power == 1)
+          gate.marked_node.powerOff();
+        else
+          gate.marked_node.powerOn();
+      }
+    }
+  );
   }
 
   check_mouseover() {
@@ -90,6 +106,13 @@ class gate_core {
 
 }
 
-Canvas.Element.onmousedown = function() {
-  gate_core.click_event();
+Canvas.Element.onmousedown = function(e) {
+  switch(e.which) {
+    case 1:
+      gate_core.click_event();
+    break;
+    case 2:
+      gate_core.toggle_event();
+    break;
+  }
 }
