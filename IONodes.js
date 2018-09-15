@@ -18,6 +18,7 @@ class node {
   defineIO(gate) {
     if(this.type == 0) {
       this.partner = null;
+      this.cable = null;
     } else {
       this.cables = [new cable(gate, {x:this.x,y:this.y})];
       this.connected = false;
@@ -44,7 +45,7 @@ class node {
       this.update_input();
       circle(this.x + x, this.y + y, size, "fill", this.color);
     }
-    if(this.active || this.power == 1) {
+    if(this.power == 1) {
       this.color = "yellow";
     }
   }
@@ -65,7 +66,6 @@ class node {
   activate(index) {
     index = index || this.cable_count;
     this.active = true;
-    this.color = "yellow";
     if(this.type == 1) {
       this.cables[index].status = 1;
       // if(this.partner) {
@@ -82,6 +82,7 @@ class node {
     } else {
       this.power = 0;
       this.partner = null;
+      this.cable = null;
     }
   }
 
@@ -92,11 +93,12 @@ class node {
 
   unmark() {
     this.marked = false;
-    this.color = (this.active) ? "yellow" : "white";
+    this.color = (this.power) ? "yellow" : "white";
   }
 
   powerOn() {
     this.power = 1;
+    this.color = "yellow";
     if(this.type==1) {
       this.cables.forEach(cable => cable.powered = true);
     }
@@ -104,6 +106,7 @@ class node {
 
   powerOff() {
     this.power = 0;
+    this.color = "white";
     if(this.type==1) {
       this.cables.forEach(cable => cable.powered = false);
     }
@@ -116,12 +119,22 @@ class node {
     this.cables[this.cable_count].powered = (this.power == 1) ? true : false;
   }
 
+  delete_cable() {
+    this.powerOff();
+    let index = this.partner.cables.indexOf(this.cable);
+    this.partner.cables.splice(index,1);
+    this.partner.cable_count--;
+    this.cable.delete_cable();
+    this.deactivate();
+  }
+
   static connect(gate) {
     if(!gate.marked_node.partner) {
       active_node.cables[active_node.cable_count].connect(gate.marked_node, gate);
       active_node.generate_cable(gate_storage[active_node.parent_index]);
       //active_node.partner = gate.marked_node;
       gate.marked_node.partner = active_node;
+      gate.marked_node.cable = active_node.cables[active_node.cable_count - 1];
       gate.marked_node.activate();
       active_node = null;
       gate.marked_node.update_input();
@@ -141,6 +154,8 @@ class node {
     } else if(gate.marked_node.type == 1){
       gate.marked_node.activate();
       active_node = gate.marked_node;
+    } else if(gate.marked_node.partner) {
+      gate.marked_node.delete_cable();
     }
   }
 }

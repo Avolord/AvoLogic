@@ -32,6 +32,11 @@ class cable {
     }
   }
 
+  delete_cable() {
+    let index = cable_storage.indexOf(this);
+    cable_storage.splice(index,1);
+  }
+
   connect(node, end_gate) {
     if (!this.n1) {
       n1 = node;
