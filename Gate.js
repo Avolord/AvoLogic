@@ -76,6 +76,9 @@ class gate extends gate_core{
       case "not":
         this.checkNOT();
       break;
+      case "lamp":
+        this.checkLAMP();
+      break;
     }
   }
 
@@ -108,6 +111,16 @@ class gate extends gate_core{
       this.outputs.forEach(y => y.powerOn());
     } else {
       this.outputs.forEach(y => y.powerOff());
+    }
+  }
+
+  checkLAMP() {
+    if(this.inputs.every(x => x.power == 1)) {
+      this.color = "yellow";
+      this.alpha = 0.8;
+    } else {
+      this.color = "white";
+      this.alpha = 0.2;
     }
   }
 

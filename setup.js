@@ -1,7 +1,8 @@
 Animation(true);
 recordMousePos(Canvas.Element);
 let AND = new gate(100,300, "and");
-let GEN = new gate(400,300, "generator");
+let GEN1 = new gate(400,300, "generator");
+let GEN2 = new gate(400,0, "generator");
 let OR = new gate(700,300, "or");
 let XOR = new gate(100,600, "xor");
 let NOT = new gate(400,600, "not");

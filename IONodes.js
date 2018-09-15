@@ -44,7 +44,7 @@ class node {
       this.update_input();
       circle(this.x + x, this.y + y, size, "fill", this.color);
     }
-    if(this.active) {
+    if(this.active || this.power == 1) {
       this.color = "yellow";
     }
   }

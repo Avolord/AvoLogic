@@ -1,15 +1,15 @@
 let gate_scaling = 1;
 let standard_size = 100;
 
-//Configuration [0]:Number of inputs | [1]:Number of outputs | [2]:Power On/Off
+//Configuration [0]:Number of inputs | [1]:Number of outputs | [2]:Power On/Off | [3]:Color | [4]:Alpha
 
 let gate_configurations = {
-  "and" : [2,1,0,"pink"],
-  "or": [2,1,0,"brown"],
-  "xor": [2,1,0,"blue"],
-  "generator": [0,4,1,"white"],
-  "lamp": [1,0,0,"white"],
-  "not": [1,1,0,"yellow"]
+  "and" : [2,1,0,"pink",0.2],
+  "or": [2,1,0,"brown",0.2],
+  "xor": [2,1,0,"blue",0.2],
+  "generator": [0,4,1,"white",0.2],
+  "lamp": [1,0,0,"white",0.2],
+  "not": [1,1,0,"yellow",0.2]
 }
 
 class gate_core {
@@ -29,12 +29,14 @@ class gate_core {
       this.out = config[1];
       this.generating = config[2];
       this.color = config[3];
+      this.alpha = config[4];
       this.type = type.toLowerCase();
     } else {
       this.in = 2;
       this.out = 1;
       this.generating = 0;
       this.color = "blue";
+      this.alpha = 0.2;
       this.type = "and";
     }
   }
@@ -82,7 +84,7 @@ class gate_core {
       });
 
       rect(this.x, this.y, standard_size, standard_size, "stroke", this.color);
-      rect(this.x, this.y, standard_size, standard_size, "fill", this.color, 0.2);
+      rect(this.x, this.y, standard_size, standard_size, "fill", this.color, this.alpha);
       write(this.x + standard_size / 2, this.y + standard_size / 2, this.type, standard_size / 6, "black", "fill", 1, "center")
     }
 
