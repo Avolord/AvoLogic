@@ -12,27 +12,27 @@ class node {
     this.active = false;
     this.power = 0;
     this.parent_index = gate.index;
+    this.cable_count = 0;
   }
 
   defineIO(gate) {
     if(this.type == 0) {
       this.partner = null;
     } else {
-      this.cable = new cable(gate, {x:this.x,y:this.y});
+      this.cables = [new cable(gate, {x:this.x,y:this.y})];
       this.connected = false;
-      this.partner = null;
+      //this.partner = null;
     }
   }
 
   update_input() {
-    if(this.partner && this.partner.power == 1) {
-      this.power = 1;
+    if(this.partner) {
+      this.power = this.partner.power;
     }
   }
 
   draw(x , y, size) {
     if(this.type == 1) {
-      this.cable.draw();
       circle(this.x + x, this.y + y, size, "fill", this.color);
       circle(this.x + x, this.y + y, size/3, "fill", "black");
     } else {
@@ -57,25 +57,26 @@ class node {
       return false;
   }
 
-  activate() {
+  activate(index) {
+    index = index || this.cable_count;
     this.active = true;
     this.color = "yellow";
     if(this.type == 1) {
-      this.cable.status = 1;
-      if(this.partner) {
-        this.partner.deactivate();
-      }
+      this.cables[index].status = 1;
+      // if(this.partner) {
+      //   this.partner.deactivate();
+      // }
     }
   }
 
   deactivate() {
     this.active = false;
     this.color = "white";
-    this.partner = null;
     if(this.type == 1) {
-      this.cable.status = 0;
+      this.cables.forEach(cable => cable.status = 0);
     } else {
       this.power = 0;
+      this.partner = null;
     }
   }
 
@@ -92,21 +93,29 @@ class node {
   powerOn() {
     this.power = 1;
     if(this.type==1) {
-      this.cable.powered = true;
+      this.cables.forEach(cable => cable.powered = true);
     }
   }
 
   powerOff() {
     this.power = 0;
     if(this.type==1) {
-      this.cable.powered = false;
+      this.cables.forEach(cable => cable.powered = false);
     }
+  }
+
+  generate_cable(gate) {
+    gate = gate || gate_storage[this.parent_index];
+    this.cables.push(new cable(gate, {x:this.x,y:this.y}));
+    this.cable_count++;
+    this.cables[this.cable_count].powered = (this.power == 1) ? true : false;
   }
 
   static connect(gate) {
     if(!gate.marked_node.partner) {
-      active_node.cable.connect(gate.marked_node, gate);
-      active_node.partner = gate.marked_node;
+      active_node.cables[active_node.cable_count].connect(gate.marked_node, gate);
+      active_node.generate_cable(gate_storage[active_node.parent_index]);
+      //active_node.partner = gate.marked_node;
       gate.marked_node.partner = active_node;
       gate.marked_node.activate();
       active_node = null;

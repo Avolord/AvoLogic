@@ -114,13 +114,14 @@ class CanDraw {
     Canvas.alpha();
   }
 
-  Write(x, y, text, size, color, style, alpha = 1) {
+  Write(x, y, text, size, color, style, alpha = 1, align = "left") {
     this.ctx.font = (size || 30) + "px Arial";
     this.ctx.fillStyle = color || this.ctx.fillStyle;
     this.ctx.strokeStyle = color || this.ctx.strokeStyle;
     Canvas.alpha(alpha);
-    if (style && style == "stroke") this.ctx.strokeText(text, x, y);
-    if (style && style == "fill") this.ctx.fillText(text, x, y);
+    this.ctx.textAlign = align;
+    if (style == "stroke") this.ctx.strokeText(text, x, y);
+    if (style == "fill") this.ctx.fillText(text, x, y);
     if (!style && this.style == "stroke") this.ctx.strokeText(text, x, y);
     if (!style && this.style == "fill") this.ctx.fillText(text, x, y);
   }
@@ -169,4 +170,4 @@ let line = (x, y, x2, y2, color, width, alpha) => Canvas.Line(x, y, x2, y2, colo
 let rect = (x, y, w, h, style, color, alpha) => Canvas.Rectangle(x, y, w, h, style, color, alpha);
 let circle = (x, y, r, style, color, alpha) => Canvas.Circle(x, y, r, style, color, alpha);
 let dot = (x, y, color, style, alpha) => Canvas.Dot(x, y, color, style, alpha = 1);
-let write = (x, y, text, size, color, style, alpha) => Canvas.Write(x, y, text, size, color, style, alpha = 1);
+let write = (x, y, text, size, color, style, alpha, align) => Canvas.Write(x, y, text, size, color, style, alpha, align);

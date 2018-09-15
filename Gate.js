@@ -7,14 +7,17 @@ class gate extends gate_core{
     this.index = gate_storage.length;
     this.inputs = this.initInputs();
     this.outputs = this.initOutputs();
+    this.check_status();
     gate_storage.push(this);
   }
 
   static render() {
+    cable.render();
     gate_storage.forEach(gate => {
       gate.marked_node = null;
       gate.check_mouseover();
       gate.draw();
+      gate.check_status();
     });
   }
 
@@ -70,23 +73,38 @@ class gate extends gate_core{
       case "xor":
         this.checkXOR();
       break;
+      case "not":
+        this.checkNOT();
+      break;
     }
   }
 
   checkAND() {
     if(this.inputs.every(x => x.power == 1)) {
       this.outputs.forEach(y => y.powerOn());
+    } else {
+      this.outputs.forEach(y => y.powerOff());
     }
   }
 
   checkOR() {
     if(this.inputs.some(x => x.power == 1)) {
       this.outputs.forEach(y => y.powerOn());
+    } else {
+      this.outputs.forEach(y => y.powerOff());
     }
   }
 
   checkXOR() {
     if(this.inputs.some(x => x.power == 1) && !this.inputs.every(x => x.power == 1)) {
+      this.outputs.forEach(y => y.powerOn());
+    } else {
+      this.outputs.forEach(y => y.powerOff());
+    }
+  }
+
+  checkNOT() {
+    if(this.inputs.every(x => x.power == 0)) {
       this.outputs.forEach(y => y.powerOn());
     } else {
       this.outputs.forEach(y => y.powerOff());

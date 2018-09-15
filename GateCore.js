@@ -8,7 +8,8 @@ let gate_configurations = {
   "or": [2,1,0,"brown"],
   "xor": [2,1,0,"blue"],
   "generator": [0,4,1,"white"],
-  "lamp": [1,0,0,"white"]
+  "lamp": [1,0,0,"white"],
+  "not": [2,1,0,"yellow"]
 }
 
 class gate_core {

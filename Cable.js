@@ -1,4 +1,5 @@
 let connectable_cable = null;
+let cable_storage = [];
 
 class cable {
   constructor(start_gate, node) {
@@ -11,6 +12,7 @@ class cable {
     this.n2 = null; //end_node;
     this.status = 0;
     this.powered = false;
+    cable_storage.push(this);
   }
 
   draw() {
@@ -38,5 +40,9 @@ class cable {
       this.n2 = node;
       this.status = 2;
     }
+  }
+
+  static render(cables) {
+    cable_storage.forEach(cable => cable.draw());
   }
 }
