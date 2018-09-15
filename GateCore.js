@@ -82,6 +82,7 @@ class gate_core {
 
       rect(this.x, this.y, standard_size, standard_size, "stroke", this.color);
       rect(this.x, this.y, standard_size, standard_size, "fill", this.color, 0.2);
+      write(this.x + standard_size / 2, this.y + standard_size / 2, this.type, standard_size / 6, "black", "fill", 1, "center")
     }
 
 }
