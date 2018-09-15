@@ -1,0 +1,35 @@
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    Perceptron
+  </title>
+  <style type="text/css">
+    p {
+      visibility: visible;
+      position: absolute;
+      left: 20;
+      color: red;
+    }
+  </style>
+</head>
+<script src="AvoDraw.js"></script>
+
+<body onload="setup()">
+  <p id="Count">0</p>
+</body>
+<script>
+  Canvas = new CanDraw("","","rgb(25,25,25)", 1);
+  Canvas.Translate(0,0);
+  let width = Canvas.Element.width;
+  let height = Canvas.Element.height;
+</script>
+<script src="AvoLoop.js"></script>
+<script src="GateCore.js"></script>
+<script src="IONodes.js"></script>
+<script src="Cable.js"></script>
+<script src="Gate.js"></script>
+<script src="setup.js"></script>
+
+</html>
