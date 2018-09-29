@@ -14,22 +14,23 @@
     }
   </style>
 </head>
-<script src="AvoDraw.js"></script>
+<script src="texture.js"></script>
+<script src="libs\AvoDraw.js"></script>
 
 <body onload="setup()">
   <p id="Count">0</p>
 </body>
 <script>
-  Canvas = new CanDraw("","","rgb(25,25,25)", 1);
-  Canvas.Translate(0,0);
+  Canvas = new CanDraw("", "", "rgb(220,220,220)", 1);
+  Canvas.Translate(0, 0);
   let width = Canvas.Element.width;
   let height = Canvas.Element.height;
 </script>
-<script src="AvoLoop.js"></script>
-<script src="GateCore.js"></script>
-<script src="IONodes.js"></script>
-<script src="Cable.js"></script>
-<script src="Gate.js"></script>
+<script src="libs\AvoLoop.js"></script>
+<script src="avologic\GateCore.js"></script>
+<script src="avologic\IONodes.js"></script>
+<script src="avologic\Cable.js"></script>
+<script src="avologic\Gate.js"></script>
 <script src="setup.js"></script>
 
 </html>

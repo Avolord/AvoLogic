@@ -13,5 +13,10 @@ function setup() {
 }
 
 function draw() {
+  if(loaded_images < texture_amount) {
+    document.getElementById("Count").innerHTML = "LOADING TEXTURES!...("+loaded_images+" / "+texture_amount+") - "+FPS;
+    return;
+  }
   gate.render();
+  document.getElementById("Count").innerHTML = FPS;
 }
