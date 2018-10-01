@@ -13,10 +13,25 @@ function setup() {
 }
 
 function draw() {
-  if(loaded_images < texture_amount) {
-    document.getElementById("Count").innerHTML = "LOADING TEXTURES!...("+loaded_images+" / "+texture_amount+") - "+FPS;
-    return;
-  }
+  // if(loaded_images < texture_amount) {
+  //   document.getElementById("Count").innerHTML = "LOADING TEXTURES!...("+loaded_images+" / "+texture_amount+") - "+FPS;
+  //   return;
+  // }
   gate.render();
   document.getElementById("Count").innerHTML = FPS;
+}
+
+let saveFile = function(filename, data) {
+    var blob = new Blob([data], {type: 'text/csv'});
+    if(window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    }
+    else{
+        var elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
 }

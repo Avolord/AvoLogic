@@ -20,7 +20,7 @@ class node {
       this.partner = null;
       this.cable = null;
     } else {
-      this.cables = [new cable(gate, {x:this.x,y:this.y})];
+      this.cables = [new cable(gate, this)];
       this.connected = false;
       //this.partner = null;
     }
@@ -53,8 +53,8 @@ class node {
   }
 
   check_mouseover(x, y, size) {
-    const dx = this.x - mouseX + x;
-    const dy = this.y - mouseY + y;
+    const dx = this.x - mouseX + x + transX;
+    const dy = this.y - mouseY + y + transY;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist < size) {
@@ -117,7 +117,7 @@ class node {
 
   generate_cable(gate) {
     gate = gate || gate_storage[this.parent_index];
-    this.cables.push(new cable(gate, {x:this.x,y:this.y}));
+    this.cables.push(new cable(gate, this));
     this.cable_count++;
     this.cables[this.cable_count].powered = (this.power == 1) ? true : false;
   }

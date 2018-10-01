@@ -21,7 +21,7 @@ class cable {
         return;
       break;
       case 1:
-        line(this.n1.x + this.g1.x, this.n1.y + this.g1.y, mouseX, mouseY, "white", 5);
+        line(this.n1.x + this.g1.x, this.n1.y + this.g1.y, mouseX - transX, mouseY - transY, "white", 5);
       break;
       case 2:
         if(this.powered)
